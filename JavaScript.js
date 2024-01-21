@@ -1,11 +1,7 @@
-//we make a function where we return 3 different strings
-
-/* fucntion for computer to choose random array for the game */
-
 let playerScore = 0;
 let computerScore = 0;
 let winner = "";
-
+let answer;
 
 const choices = ["paper", "rock", "scissors"];
 
@@ -13,32 +9,60 @@ function getComputerChoice() {
     return choices[Math.floor(Math.random() * choices.length)];
 }
 
-const result = getComputerChoice(choices);
-
-/* here i made 1 round for the rock for a draw, win and lose
-it picks random as a pc and fights with plkayer's "rock" */
-let answer = prompt("What's ur answer?");
-
-function playRound(playerSelection, computerSelection) {
-
+function playRound(playerSelection) {
+    const computerSelection = getComputerChoice();
     playerSelection = playerSelection.toLowerCase();
 
     if (answer === playerSelection && answer === computerSelection) {
-        winner = "Its a tie!";
-    } else if ( answer === playerSelection &&
+        winner = "It's a tie!";
+    } else if (
         (playerSelection === "rock" && computerSelection === "scissors") ||
         (playerSelection === "paper" && computerSelection === "rock") ||
         (playerSelection === "scissors" && computerSelection === "paper")
-    ){
-        playerScore++
-        winner = "player";
+    ) {
+        playerScore++;
+        winner = "Player wins!";
     } else {
-        computerScore++
-        winner = "computer";
+        computerScore++;
+        winner = "Computer wins!";
     }
+
+    updateResults();
 }
 
+const button1 = document.getElementById('button1');
+const button2 = document.getElementById('button2');
+const button3 = document.getElementById('button3');
+const resultsDiv = document.getElementById('results');
 
-const computerChoice = getComputerChoice(choices);
-const roundResult = playRound(answer, computerChoice);
-console.log(roundResult);
+button1.addEventListener('click', function() {
+    playRound("rock");
+});
+
+button2.addEventListener('click', function() {
+    playRound("paper");
+});
+
+button3.addEventListener('click', function() {
+    playRound("scissors");
+});
+
+function updateResults(){
+    resultsDiv.innerText = `<p>${winner}</p><p>Player score: ${playerScore}</p> | <p>Computer score: ${computerScore}</p>`
+
+    if (playerScore === 5 || computerScore === 5){
+        announceWinner()
+    }
+};
+
+function announceWinner(){
+    if(playerScore > computerScore){
+        resultsDiv.innerText = `You win the game!`
+    }
+    else if(computerScore > playerScore){
+        resultsDiv.innerText = `Computer wins the game!` 
+    }
+    else {
+        resultsDiv.innerText = `It's a tie!`
+    }
+}
