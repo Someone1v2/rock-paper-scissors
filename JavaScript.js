@@ -21,10 +21,10 @@ function playRound(playerSelection) {
         (playerSelection === "scissors" && computerSelection === "paper")
     ) {
         playerScore++;
-        winner = "Player wins!";
+        winner = "Player wins! ";
     } else {
         computerScore++;
-        winner = "Computer wins!";
+        winner = "Computer wins! ";
     }
 
     updateResults();
@@ -48,7 +48,7 @@ button3.addEventListener('click', function() {
 });
 
 function updateResults(){
-    resultsDiv.innerText = `<p>${winner}</p><p>Player score: ${playerScore}</p> | <p>Computer score: ${computerScore}</p>`
+    resultsDiv.innerText = `${winner}Player score: ${playerScore} | Computer score: ${computerScore}`
 
     if (playerScore === 5 || computerScore === 5){
         announceWinner()
@@ -66,3 +66,4 @@ function announceWinner(){
         resultsDiv.innerText = `It's a tie!`
     }
 }
+
